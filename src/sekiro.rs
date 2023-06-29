@@ -17,30 +17,32 @@ impl error::Error for SekiroNotFound{
 
 
 struct SekiroPatcher {
+    pid: u32,
     mem_file: fs::File,
 }
 
 impl SekiroPatcher {
 
-    pub fn new(path: PathBuf) -> Result<Self,Box<dyn error::Error>> {
-        let file = fs::File::open(path)?;
-        Ok(SekiroPatcher { mem_file: file })
+    pub fn new(pid_s: String) -> Result<Self,Box<dyn error::Error>> {
+        let pid: u32 = pid_s.parse().expect("Could not convert PID to integer...");
+        let file = fs::File::open(PROC_PATH.to_owned() + "/" + &pid_s + "/mem")?;
+        Ok(SekiroPatcher { pid: pid, mem_file: file })
     }
 
     pub fn patch_resolution(height: u32, width: u32) -> Result<(),Box<dyn error::Error>> {
-        Ok(())
+        todo!();
     }
 
     pub fn patch_fps(fps: u32) -> Result<(),Box<dyn error::Error>> {
-        Ok(())
+        todo!();
     }
 
     pub fn disable_dragonrot() -> Result<(),Box<dyn error::Error>> {
-        Ok(())
+        todo!();
     }
 
     fn patch_speedfix() -> Result<(),Box<dyn error::Error>> {
-        Ok(())
+        todo!();
     }
 }
 
@@ -98,8 +100,6 @@ pub fn sekiro_main() -> bool {
         Ok(pid) => { println!("{}", pid) },
         Err(e) => { println!("Error: {}", e); return false;}
     }
-
-
 
     true
 }
